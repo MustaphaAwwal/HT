@@ -39,7 +39,16 @@ commands:
             aws s3 cp "s3://htwordpressbucket/$ZIP_FILE" . --endpoint-url https://eu2.contabostorage.com
             unzip "$ZIP_FILE"
             rm "$ZIP_FILE"
-            aws s3 cp . s3://htwordpressbucket/2021/ --recursive --endpoint-url https://eu2.contabostorage.com
+            
+            # Extract the year from the ZIP file name
+            YEAR=$(echo "$ZIP_FILE" | grep -oE '^(202[0-4])' | head -n 1 || echo "unknown")
+            if [ "$YEAR" = "unknown" ]; then
+              echo "Unable to determine the destination folder. Skipping upload."
+              exit 1
+            fi
+            
+            # Upload to the determined S3 folder
+            aws s3 cp . "s3://htwordpressbucket/$YEAR/" --recursive --endpoint-url https://eu2.contabostorage.com
             cd ..
             rm -rf tmp
 
@@ -189,24 +198,43 @@ workflows:
   version: 2
   upload_workflow:
     jobs:
-      - upload_zip_2020_11
-      - upload_zip_202020_09
-      - upload_zip_2021_07
-      - upload_zip_2021_09
-      - upload_zip_2021_11
-      - upload_zip_2022_01
-      - upload_zip_2022_03
-      - upload_zip_2022_05
-      - upload_zip_2022_07
-      - upload_zip_2022_09
-      - upload_zip_2022_11
-      - upload_zip_2023_03_1
-      - upload_zip_2023_05
-      - upload_zip_2023_07
-      - upload_zip_2023_09
-      - upload_zip_2023_11
-      - upload_zip_2024
-      - upload_zip_OIP_1
-      - upload_zip_aioseo
-      - upload_zip_htaccess
-        context: test
+      - upload_zip_2020_11:
+          context: test
+      - upload_zip_202020_09:
+          context: test
+      - upload_zip_2021_07:
+          context: test
+      - upload_zip_2021_09:
+          context: test
+      - upload_zip_2021_11:
+          context: test
+      - upload_zip_2022_01:
+          context: test
+      - upload_zip_2022_03:
+          context: test
+      - upload_zip_2022_05:
+          context: test
+      - upload_zip_2022_07:
+          context: test
+      - upload_zip_2022_09:
+          context: test
+      - upload_zip_2022_11:
+          context: test
+      - upload_zip_2023_03_1:
+          context: test
+      - upload_zip_2023_05:
+          context: test
+      - upload_zip_2023_07:
+          context: test
+      - upload_zip_2023_09:
+          context: test
+      - upload_zip_2023_11:
+          context: test
+      - upload_zip_2024:
+          context: test
+      - upload_zip_OIP_1:
+          context: test
+      - upload_zip_aioseo:
+          context: test
+      - upload_zip_htaccess:
+          context: test
