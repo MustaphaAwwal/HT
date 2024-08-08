@@ -202,39 +202,77 @@ workflows:
           context: test
       - upload_zip_202020_09:
           context: test
+          requires:
+            - upload_zip_2020_11
       - upload_zip_2021_07:
           context: test
+          requires:
+            - upload_zip_202020_09
       - upload_zip_2021_09:
           context: test
+          requires:
+            - upload_zip_2021_07
       - upload_zip_2021_11:
           context: test
+          requires:
+            - upload_zip_2021_09
       - upload_zip_2022_01:
           context: test
+          requires:
+            - upload_zip_2021_11
       - upload_zip_2022_03:
           context: test
+          requires:
+            - upload_zip_2022_01
       - upload_zip_2022_05:
           context: test
+          requires:
+            - upload_zip_2022_03
       - upload_zip_2022_07:
           context: test
+          requires:
+            - upload_zip_2022_05
       - upload_zip_2022_09:
           context: test
+          requires:
+            - upload_zip_2022_07
       - upload_zip_2022_11:
           context: test
+          requires:
+            - upload_zip_2022_09
       - upload_zip_2023_03_1:
           context: test
+          requires:
+            - upload_zip_2022_11
       - upload_zip_2023_05:
           context: test
+          requires:
+            - upload_zip_2023_03_1
       - upload_zip_2023_07:
           context: test
+          requires:
+            - upload_zip_2023_05
       - upload_zip_2023_09:
           context: test
+          requires:
+            - upload_zip_2023_07
       - upload_zip_2023_11:
           context: test
+          requires:
+            - upload_zip_2023_09
       - upload_zip_2024:
           context: test
+          requires:
+            - upload_zip_2023_11
       - upload_zip_OIP_1:
           context: test
+          requires:
+            - upload_zip_2024
       - upload_zip_aioseo:
           context: test
+          requires:
+            - upload_zip_OIP_1
       - upload_zip_htaccess:
           context: test
+          requires:
+            - upload_zip_aioseo
