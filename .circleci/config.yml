@@ -35,7 +35,7 @@ commands:
           command: |
             mkdir -p tmp
             cd tmp
-            ZIP_FILE=<< parameters.zip_file >>
+            ZIP_FILE="<< parameters.zip_file >>"
             aws s3 cp "s3://htwordpressbucket/$ZIP_FILE" . --endpoint-url https://eu2.contabostorage.com
             unzip "$ZIP_FILE"
             rm "$ZIP_FILE"
